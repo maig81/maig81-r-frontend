@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://lq3sl6whjrq8"]
+
+[ext_resource type="Script" uid="uid://rtm2yilu8olo" path="res://login/login.gd" id="1_t3q6d"]
+
+[sub_resource type="Theme" id="Theme_tajqu"]
+default_font_size = 40
+
+[node name="login" type="Node2D" unique_id=1410431246]
+script = ExtResource("1_t3q6d")
+
+[node name="Control" type="Control" parent="." unique_id=364378778]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=358780914]
+layout_mode = 0
+offset_left = 243.0
+offset_top = 168.0
+offset_right = 926.0
+offset_bottom = 410.0
+theme = SubResource("Theme_tajqu")
+
+[node name="Username" type="LineEdit" parent="Control/VBoxContainer" unique_id=830966462]
+layout_mode = 2
+text = "maig81@gmail.com"
+placeholder_text = "username"
+
+[node name="Password" type="LineEdit" parent="Control/VBoxContainer" unique_id=1230241835]
+layout_mode = 2
+text = "kataklinger12"
+placeholder_text = "pass"
+
+[node name="Button" type="Button" parent="Control/VBoxContainer" unique_id=1880284965]
+layout_mode = 2
+text = "LOGIN
+"

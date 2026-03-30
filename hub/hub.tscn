@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://celfft0geprlb"]
+
+[ext_resource type="Theme" uid="uid://bdhwqtq5760us" path="res://theme_text_main.tres" id="1_1wrr7"]
+[ext_resource type="Script" uid="uid://difg3mesa0eyl" path="res://hub/hub.gd" id="1_clbpi"]
+
+[node name="Hub" type="Node2D" unique_id=1689833430]
+script = ExtResource("1_clbpi")
+
+[node name="Control" type="Control" parent="." unique_id=1946804089]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1151.0
+offset_bottom = 645.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=628486305]
+layout_mode = 0
+offset_right = 1150.0
+offset_bottom = 645.0
+theme = ExtResource("1_1wrr7")
+
+[node name="ReloadRoomList" type="Button" parent="Control/VBoxContainer" unique_id=910733315]
+layout_mode = 2
+text = "Reload room list"
+
+[node name="Label" type="Label" parent="Control/VBoxContainer" unique_id=685702085]
+layout_mode = 2
+text = "Room list"
+
+[node name="RoomList" type="ItemList" parent="Control/VBoxContainer" unique_id=1049449961]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+item_count = 2
+item_0/text = "test1"
+item_1/text = "test2"
+
+[node name="CreateRoom" type="Button" parent="Control/VBoxContainer" unique_id=1720566500]
+layout_mode = 2
+text = "Create Room"
+
+[connection signal="pressed" from="Control/VBoxContainer/ReloadRoomList" to="." method="_on_reload_room_list_button_down"]
+[connection signal="item_clicked" from="Control/VBoxContainer/RoomList" to="." method="_on_room_clicked"]
+[connection signal="button_down" from="Control/VBoxContainer/CreateRoom" to="." method="_on_create_room_button_down"]
