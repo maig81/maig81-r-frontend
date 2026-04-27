@@ -28,12 +28,12 @@ theme = SubResource("Theme_tajqu")
 
 [node name="Username" type="LineEdit" parent="Control/VBoxContainer" unique_id=830966462]
 layout_mode = 2
-text = "maig81@gmail.com"
+text = "test1@latestartergames.com"
 placeholder_text = "username"
 
 [node name="Password" type="LineEdit" parent="Control/VBoxContainer" unique_id=1230241835]
 layout_mode = 2
-text = "kataklinger12"
+text = "LateStarterGames1"
 placeholder_text = "pass"
 
 [node name="Button" type="Button" parent="Control/VBoxContainer" unique_id=1880284965]

@@ -5,6 +5,7 @@ const SIZE = 16
 
 
 var id: String = ""
+var index: int = -1
 var is_local = true
 var block_id: int = -1
 var block_rotation_index: int = -1
@@ -42,6 +43,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			dir.y += 1
 		KEY_R:
 			RotateBlock()
+		KEY_E:
+			PlaceBlock()
 
 	if dir != Vector2.ZERO:
 		position += dir * SIZE
@@ -54,6 +57,10 @@ func MoveCursor(new_position: Vector2) -> void:
 func RotateBlock() -> void:
 	DrawBlock(block_id, (block_rotation_index + 1) % 4)
 	Network.send_message("rotate_block", {})
+
+func PlaceBlock() -> void:
+	Network.send_message("place_block", {})
+
 
 func DrawBlock(new_block_id: int, new_rotation_index: int) -> void:
 	if new_block_id == block_id and new_rotation_index == block_rotation_index:

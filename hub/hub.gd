@@ -37,10 +37,11 @@ func _ws_room_list(payload: Variant) -> void:
 
 func _ws_room_joined(payload: Variant) -> void:
 	var room_id: String = payload.get("room_id", "")
-	var player_id: String = payload.get("player_id", "")
+	var player_uuid: String = payload.get("player_uuid", "")
 	GameSession.room_id = room_id
-	GameSession.player_id = player_id
-	print_debug("ws room_joined ", room_id, player_id)
+	GameSession.player_uuid = player_uuid
+	print_debug("ws room_joined ", room_id, player_uuid)
+	Network.send_message("player_ready")
 	get_tree().change_scene_to_file("res://game/game.tscn")
 
 func _ws_room_error(error: String) -> void:

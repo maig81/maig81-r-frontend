@@ -1,6 +1,4 @@
-extends Node2D
-
-const CELL_SIZE = 16
+extends Node
 
 func build_terrain(cells: Array) -> void:
 	_clear_islands()
@@ -9,15 +7,15 @@ func build_terrain(cells: Array) -> void:
 		var raw: PackedVector2Array = _trace_boundary(islands[idx], cells)
 		if raw.size() < 3:
 			continue
-		var expanded: PackedVector2Array = _expand_polygon(raw, float(CELL_SIZE))
+		var expanded: PackedVector2Array = _expand_polygon(raw, float(GameSession.CELL_SIZE))
 		var smoothed: PackedVector2Array = _smooth_polygon(Array(expanded), 3)
 		_spawn_line(smoothed, idx)
 
 
-func _cells(cells:Array, x:int, y:int) -> int:
+func _cells(cells: Array, x: int, y: int) -> int:
 	var sizeY = cells.size()
 	var sizeX = cells[0].size()
-	if (x<0 || x>=sizeX || y<0 || y>=sizeY):
+	if (x < 0 || x >= sizeX || y < 0 || y >= sizeY):
 		return 0
 
 	return cells[y][x]
@@ -26,7 +24,7 @@ func _cells(cells:Array, x:int, y:int) -> int:
 func _trace_boundary(island: Dictionary, cells: Array) -> PackedVector2Array:
 	var sizeY: int = cells.size()
 	var sizeX: int = cells[0].size()
-	var W1: int = sizeX + 1  # vertex grid width (corners, not cells)
+	var W1: int = sizeX + 1 # vertex grid width (corners, not cells)
 	var edge_map: Dictionary = {}
 
 	for encoded_idx in island:
@@ -62,8 +60,8 @@ func _trace_boundary(island: Dictionary, cells: Array) -> PackedVector2Array:
 
 	for _i in edge_map.size() + 1:
 		result.append(Vector2(
-			float(current % W1 * CELL_SIZE),
-			float(current / W1 * CELL_SIZE)
+			float(current % W1 * GameSession.CELL_SIZE),
+			float(current / W1 * GameSession.CELL_SIZE)
 		))
 		var next_key: int = edge_map[current]
 		edge_map.erase(current)
@@ -74,8 +72,8 @@ func _trace_boundary(island: Dictionary, cells: Array) -> PackedVector2Array:
 
 
 # Expand the island to craete a shore
-func _expand_polygon(polygon:PackedVector2Array, ammount:float)->PackedVector2Array :
-	var result: Array= Geometry2D.offset_polygon(polygon, ammount)
+func _expand_polygon(polygon: PackedVector2Array, ammount: float) -> PackedVector2Array:
+	var result: Array = Geometry2D.offset_polygon(polygon, ammount)
 	if (result.is_empty()):
 		return polygon
 	return result[0]
@@ -190,6 +188,27 @@ func _spawn_line(polygon: PackedVector2Array, idx: int) -> void:
 	line.add_to_group("islands")
 
 
-func _clear_islands()->void:
+func _clear_islands() -> void:
 	for line in get_tree().get_nodes_in_group("islands"):
 		line.queue_free()
+
+
+func _decode_rle(width: int, height: int, rle: Array) -> Array:
+	var flat: Array = []
+	var value: int = 0
+	for count in rle:
+		for _i in range(count):
+			flat.append(value)
+		value = 1 - value
+
+	if flat.size() != width * height: # ← guard BEFORE the loop
+		push_error("terrain_renderer.gd: RLE size mismatch", flat.size(), width, height)
+		return []
+
+	var cells: Array = []
+	for y in range(height):
+		var row: Array = []
+		for x in range(width):
+			row.append(flat[y * width + x])
+		cells.append(row)
+	return cells

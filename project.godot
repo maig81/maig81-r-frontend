@@ -13,6 +13,8 @@ config_version=5
 config/name="R Frontent"
 run/main_scene="res://login/login.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/bg_color=Color(0.23137255, 0.03529412, 0.2784314, 1)
+boot_splash/image="uid://dt2apfavijwrl"
 config/icon="res://icon.svg"
 
 [autoload]

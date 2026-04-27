@@ -2,12 +2,25 @@
 
 [ext_resource type="Script" uid="uid://dxqexvkbswkx4" path="res://game/game.gd" id="1_l1rk1"]
 [ext_resource type="Script" uid="uid://ch2neryx1h1x3" path="res://game/terrain/terrain_renderer.gd" id="2_vasa2"]
+[ext_resource type="Script" uid="uid://fbb7kflf73sj" path="res://game/terrain/wall_renderer.gd" id="3_h7iqs"]
+[ext_resource type="Script" uid="uid://dlkf1e60yhngc" path="res://game/terrain/enclosed_region_renderer.gd" id="4_4fuuu"]
+[ext_resource type="Script" uid="uid://cq5yws0jmn1tc" path="res://game/castle_renderer.gd" id="5_dxrkv"]
 
 [node name="Game" type="Node2D" unique_id=384236091]
 script = ExtResource("1_l1rk1")
 
-[node name="TerrainRenderer" type="Node2D" parent="." unique_id=1685569726]
+[node name="TerrainRenderer" type="Node" parent="." unique_id=1325662582]
 script = ExtResource("2_vasa2")
 
+[node name="WallRenderer" type="Node" parent="." unique_id=563114027]
+script = ExtResource("3_h7iqs")
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2053026054]
-position = Vector2(982, 540)
+position = Vector2(770, 367)
+zoom = Vector2(0.7, 0.7)
+
+[node name="EnclosedRegionRenderer" type="Node" parent="." unique_id=162839303]
+script = ExtResource("4_4fuuu")
+
+[node name="CastleRenderer" type="Node" parent="." unique_id=1213803287]
+script = ExtResource("5_dxrkv")

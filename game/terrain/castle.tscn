@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://kpwc0r3s3gs8"]
+
+[ext_resource type="Script" uid="uid://djwb4wikwawbq" path="res://game/terrain/castle.gd" id="1_xff6j"]
+
+[node name="Castle" type="Node2D" unique_id=1044169471]
+script = ExtResource("1_xff6j")

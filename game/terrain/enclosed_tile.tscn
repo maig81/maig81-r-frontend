@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://tykb1idi410a"]
+
+[ext_resource type="Script" uid="uid://b3yaiotg7g5u2" path="res://game/terrain/enclosed_tile.gd" id="1_wbrde"]
+
+[node name="EnclosedTile" type="Node2D" unique_id=564260731]
+script = ExtResource("1_wbrde")

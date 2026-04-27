@@ -6,14 +6,24 @@ signal ws_connected
 signal ws_disconnected
 signal message_received(type: String, payload: Variant)
 
-const BASE_URL := "http://localhost:8080/api/v1"
-const WS_URL := "ws://localhost:8080/api/v1/ws"
-
 var token: String = ""
 
 var _ws: WebSocketPeer = null
 var _ws_state: WebSocketPeer.State = WebSocketPeer.STATE_CLOSED
 
+var BASE_URL: String
+var WS_URL: String
+
+func _ready() -> void:
+	if OS.get_name() == "Web":
+		var host: String = JavaScriptBridge.eval("window.location.host")
+		var protocol: String = JavaScriptBridge.eval("window.location.protocol")
+		var ws_protocol := "wss" if protocol == "https:" else "ws"
+		BASE_URL = protocol + "//" + host + "/api/v1"
+		WS_URL = ws_protocol + "://" + host + "/api/v1/ws"
+	else:
+		BASE_URL = "http://localhost:8080/api/v1"
+		WS_URL = "ws://localhost:8080/api/v1/ws"
 
 func login(email: String, password: String) -> void:
 	var http := HTTPRequest.new()
