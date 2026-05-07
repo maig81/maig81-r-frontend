@@ -12,6 +12,9 @@ var game_status: String = ""
 var players: Dictionary = {}
 var wall_cells: Array = []
 
+var current_phase: String = "" # "countdown", "battle", "place_weapons", "rebuild"
+
+
 const CELL_SIZE: int = 16
 
 func reset() -> void:
@@ -24,3 +27,4 @@ func reset() -> void:
 	game_status = "";
 	players = {};
 	wall_cells = []
+	current_phase = "";

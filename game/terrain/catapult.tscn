@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://3x2b1iqx1tew"]
+
+[ext_resource type="Script" uid="uid://djwb4wikwawbq" path="res://game/terrain/castle.gd" id="1_bxr27"]
+
+[node name="Catapult" type="Node2D" unique_id=1044169471]
+script = ExtResource("1_bxr27")

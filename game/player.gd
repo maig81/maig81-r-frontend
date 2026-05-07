@@ -44,7 +44,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		KEY_R:
 			RotateBlock()
 		KEY_E:
-			PlaceBlock()
+			ActionKeyPressed()
 
 	if dir != Vector2.ZERO:
 		position += dir * SIZE
@@ -58,8 +58,14 @@ func RotateBlock() -> void:
 	DrawBlock(block_id, (block_rotation_index + 1) % 4)
 	Network.send_message("rotate_block", {})
 
-func PlaceBlock() -> void:
-	Network.send_message("place_block", {})
+func ActionKeyPressed() -> void:
+	match GameSession.current_phase:
+		"rebuild":
+			Network.send_message("place_block", {})
+		"place_weapons":
+			Network.send_message("place_catapult", {})
+		"battle":
+			Network.send_message("attack", {})
 
 
 func DrawBlock(new_block_id: int, new_rotation_index: int) -> void:

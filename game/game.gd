@@ -4,6 +4,7 @@ extends Node2D
 @onready var wall_renderer: Node = $WallRenderer
 @onready var enclosed_region_renderer: Node = $EnclosedRegionRenderer
 @onready var castle_renderer: Node = $CastleRenderer
+@onready var catapult_renderer: Node = $CatapultRenderer
 
 var _debug_label: Label
 
@@ -18,10 +19,12 @@ func _ready() -> void:
 
 	Network.send_message("get_game_state")
 
+	# ------------------------------------------------------------
+	# DEBUG LABEL
+	# ------------------------------------------------------------
 	_debug_label = Label.new()
 	_debug_label.position = Vector2(10, 10)
 	_debug_label.z_index = 100
-	add_child(_debug_label)
 
 
 func _process(_delta: float) -> void:
@@ -33,7 +36,9 @@ func _process(_delta: float) -> void:
 		var grid_pos = node.position / 16
 		var local = "(local)" if idx == GameSession.player_index else ""
 		lines.append("Player %d%s: grid(%d, %d)" % [idx, local, int(grid_pos.x), int(grid_pos.y)])
-	_debug_label.text = "\n".join(lines)
+
+	add_child(_debug_label)
+	_debug_label.text = "\n".join(lines + ["Phase: " + str(GameSession.current_phase)])
 
 
 # ------------------------------------------------------------
@@ -56,10 +61,14 @@ func _handle_event(type: String, payload: Variant) -> void:
 			_ws_player_position(payload)
 		"walls_updated":
 			_ws_walls_updated(payload)
+		"catapults_updated":
+			_ws_catapults_updated(payload)
 		"place_block_failed":
 			_ws_place_block_failed(payload)
 		"enclosed_regions":
 			_ws_enclosed_regions(payload)
+		"phase_change":
+			_ws_phase_change(payload)
 
 
 func _exit_tree() -> void:
@@ -76,7 +85,8 @@ func _ws_terrain(_payload: Variant) -> void:
 	var height: int = terrain.get("height", 0)
 	var rle: Array = terrain.get("cells", [])
 	var cells: Array = terrain_renderer._decode_rle(width, height, rle)
-	var castles: Array = terrain.get("castles", {})
+	var castles: Array = terrain.get("castles", [])
+	var catapults: Array = terrain.get("catapults", [])
 
 	GameSession.terrain_width = width
 	GameSession.terrain_height = height
@@ -84,6 +94,7 @@ func _ws_terrain(_payload: Variant) -> void:
 
 	terrain_renderer.build_terrain(cells)
 	castle_renderer.draw_castles(castles)
+	catapult_renderer.draw_catapults(catapults)
 
 
 func _ws_game_player(payload: Variant) -> void:
@@ -138,6 +149,10 @@ func _ws_walls_updated(payload: Variant) -> void:
 	wall_renderer.draw_walls(cells)
 
 
+func _ws_catapults_updated(payload: Variant) -> void:
+	var catapults: Array = payload.get("catapults", [])
+	catapult_renderer.draw_catapults(catapults)
+
 func _ws_place_block_failed(_payload: Variant) -> void:
 	print_debug("game.gd: place_block_failed")
 	# TODO visual feedback for failed placement
@@ -148,3 +163,8 @@ func _ws_enclosed_regions(_payload: Variant) -> void:
 	print_debug(cells)
 
 	castle_renderer.set_surrounded_castles(cells)
+
+func _ws_phase_change(_payload: Variant) -> void:
+	var phase: String = _payload.get("phase", "")
+	GameSession.current_phase = phase
+	print_debug("game.gd: phase change to", phase)
