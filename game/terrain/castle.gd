@@ -11,14 +11,14 @@ func _ready() -> void:
 	rect.color = Color("000000")
 	add_child(rect)
 
-func set_surrounded(surrounded: bool, player_index: int) -> void:
+func set_surrounded(surrounded: bool, plyr_index: int) -> void:
 	if is_surrounded == surrounded:
 		return
 
 	# Change state if it's different
 	is_surrounded = surrounded
 	if is_surrounded:
-		self.player_index = player_index
+		self.player_index = plyr_index
 		rect.color = Color("ffffff")
 	else:
 		player_index = -1

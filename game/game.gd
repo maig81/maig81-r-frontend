@@ -25,6 +25,7 @@ func _ready() -> void:
 	_debug_label = Label.new()
 	_debug_label.position = Vector2(10, 10)
 	_debug_label.z_index = 100
+	add_child(_debug_label)
 
 
 func _process(_delta: float) -> void:
@@ -37,7 +38,7 @@ func _process(_delta: float) -> void:
 		var local = "(local)" if idx == GameSession.player_index else ""
 		lines.append("Player %d%s: grid(%d, %d)" % [idx, local, int(grid_pos.x), int(grid_pos.y)])
 
-	add_child(_debug_label)
+
 	_debug_label.text = "\n".join(lines + ["Phase: " + str(GameSession.current_phase)])
 
 
@@ -150,7 +151,7 @@ func _ws_walls_updated(payload: Variant) -> void:
 
 
 func _ws_catapults_updated(payload: Variant) -> void:
-	var catapults: Array = payload.get("catapults", [])
+	var catapults: Array = payload.get("cells", [])
 	catapult_renderer.draw_catapults(catapults)
 
 func _ws_place_block_failed(_payload: Variant) -> void:
