@@ -65,7 +65,11 @@ func ActionKeyPressed() -> void:
 		"place_weapons":
 			Network.send_message("place_catapult", {})
 		"battle":
-			Network.send_message("attack", {})
+			var cursor_grid = position / GameSession.CELL_SIZE
+			Network.send_message("fire", {
+				"target_x": int(cursor_grid.x),
+				"target_y": int(cursor_grid.y),
+			})
 
 
 func DrawBlock(new_block_id: int, new_rotation_index: int) -> void:

@@ -5,6 +5,7 @@ extends Node2D
 @onready var enclosed_region_renderer: Node = $EnclosedRegionRenderer
 @onready var castle_renderer: Node = $CastleRenderer
 @onready var catapult_renderer: Node = $CatapultRenderer
+@onready var projectile_renderer: Node = $ProjectileRenderer
 
 var _debug_label: Label
 
@@ -70,6 +71,10 @@ func _handle_event(type: String, payload: Variant) -> void:
 			_ws_enclosed_regions(payload)
 		"phase_change":
 			_ws_phase_change(payload)
+		"bullet_fired":
+			_ws_bullet_fired(payload)
+		"bullet_impact":
+			_ws_bullet_impact(payload)
 
 
 func _exit_tree() -> void:
@@ -169,3 +174,12 @@ func _ws_phase_change(_payload: Variant) -> void:
 	var phase: String = _payload.get("phase", "")
 	GameSession.current_phase = phase
 	print_debug("game.gd: phase change to", phase)
+
+
+func _ws_bullet_fired(payload: Variant) -> void:
+	projectile_renderer.spawn(payload.get("id"), payload.get("from"), payload.get("to"),
+		payload.get("fire_tick"), payload.get("land_tick"))
+
+func _ws_bullet_impact(payload: Variant) -> void:
+	projectile_renderer.impact(payload.get("id"), payload.get("kind"),
+		Vector2(payload.get("x"), payload.get("y")))
