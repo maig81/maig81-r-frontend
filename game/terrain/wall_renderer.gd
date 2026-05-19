@@ -23,3 +23,9 @@ func clear() -> void:
 	for node in _rendered.values():
 		node.queue_free()
 	_rendered.clear()
+
+func delete_wall(cell: Vector2) -> void:
+	var key: String = "%d,%d" % [cell.x, cell.y]
+	if _rendered.has(key):
+		_rendered[key].queue_free()
+		_rendered.erase(key)

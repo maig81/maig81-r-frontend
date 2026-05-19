@@ -2,20 +2,27 @@ extends Node
 
 const CELL_SIZE = GameSession.CELL_SIZE
 
-var _projectiles: Dictionary = {}  # id -> Node2D
+var _projectiles: Dictionary = {} # id -> { "node": Node2D, "tween": Tween }
+var _camera: Camera2D = null
+var _wall_renderer: Node = null
+
+
+func _ready() -> void:
+	_camera = get_parent().get_node_or_null("Camera2D")
+	_wall_renderer = get_parent().get_node_or_null("WallRenderer")
+
 
 func spawn(id, from_arr: Array, to_arr: Array, fire_tick: int, land_tick: int) -> void:
 	var from_px = Vector2(from_arr[0], from_arr[1]) * CELL_SIZE
 	var to_px = Vector2(to_arr[0], to_arr[1]) * CELL_SIZE
-	var duration = (land_tick - fire_tick) * 0.05  # ticks → seconds (20 TPS)
+	var duration = (land_tick - fire_tick) * 0.05 # ticks → seconds (20 TPS)
 	var arc_height = from_px.distance_to(to_px) * 0.4
 
 	var node = ColorRect.new()
 	node.size = Vector2(6, 6)
-	node.color = Color(1, 0.8, 0)
+	node.color = Color(0.069, 0.069, 0.069, 1.0)
 	node.position = from_px
 	add_child(node)
-	_projectiles[id] = node
 
 	var tween = create_tween()
 	tween.tween_method(
@@ -24,11 +31,23 @@ func spawn(id, from_arr: Array, to_arr: Array, fire_tick: int, land_tick: int) -
 			node.position = from_px.lerp(to_px, t) + Vector2(0, -arc_height * sin(t * PI)),
 	0.0, 1.0, duration
 	)
+	_projectiles[id] = {"node": node, "tween": tween}
 
 func impact(id, kind: String, cell: Vector2) -> void:
+	# remove the projectile node from the screen
 	if _projectiles.has(id):
-		_projectiles[id].queue_free()
+		var entry = _projectiles[id]
+		entry["tween"].kill()
+		entry["node"].queue_free()
 		_projectiles.erase(id)
+
+	# add shake to the camera
+	if _camera:
+		_camera.add_shake(kind)
+
+	# delete the wall
+	if (kind == "wall_destroyed"):
+		_wall_renderer.delete_wall(cell)
 
 	var effect = ColorRect.new()
 	effect.size = Vector2(CELL_SIZE, CELL_SIZE)

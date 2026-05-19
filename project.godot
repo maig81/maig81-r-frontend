@@ -26,6 +26,8 @@ GameSession="*uid://ce7156rsn3mnf"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=3
+window/size/initial_position_type=3
 
 [physics]
 

@@ -108,26 +108,25 @@ func _ws_game_player(payload: Variant) -> void:
 	var idx: int = player_state.get("idx", -1)
 	var player_uuid: String = player_state.get("uuid", "")
 
-
 	if GameSession.players.has(idx):
 		return
 
 	if player_uuid == GameSession.player_uuid:
 		GameSession.player_index = idx
 
-	var player_node = preload("res://game/player.tscn").instantiate()
-	player_node.index = idx
-	player_node.is_local = player_uuid == GameSession.player_uuid
+	var cursor_node = preload("res://game/cursor.tscn").instantiate()
+	cursor_node.index = idx
+	cursor_node.is_local = player_uuid == GameSession.player_uuid
 
 	var cursor_x: int = player_state.get("x", 0)
 	var cursor_y: int = player_state.get("y", 0)
 	var block_id: int = player_state.get("block", 0)
 	var rotation_index: int = player_state.get("r", 0)
 
-	add_child(player_node)
-	GameSession.players[idx] = player_node
-	player_node.DrawBlock(block_id, rotation_index)
-	player_node.MoveCursor(Vector2(cursor_x, cursor_y))
+	add_child(cursor_node)
+	GameSession.players[idx] = cursor_node
+	cursor_node.DrawBlock(block_id, rotation_index)
+	cursor_node.MoveCursor(Vector2(cursor_x, cursor_y))
 
 
 func _ws_player_position(_payload: Variant) -> void:
@@ -143,7 +142,8 @@ func _ws_player_position(_payload: Variant) -> void:
 		print_debug("game.gd: player node not found for index", idx)
 		return
 
-	player_node.DrawBlock(block, r)
+	if GameSession.current_phase == "rebuild":
+		player_node.DrawBlock(block, r)
 
 	if GameSession.player_index != idx:
 		player_node.MoveCursor(Vector2(x, y))
@@ -173,6 +173,10 @@ func _ws_enclosed_regions(_payload: Variant) -> void:
 func _ws_phase_change(_payload: Variant) -> void:
 	var phase: String = _payload.get("phase", "")
 	GameSession.current_phase = phase
+
+	# set the mode for all cursors
+	for cursor in GameSession.players.values():
+		cursor.set_mode(phase)
 	print_debug("game.gd: phase change to", phase)
 
 

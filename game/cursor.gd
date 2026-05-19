@@ -3,7 +3,6 @@ extends Node2D
 const BLOCKS = preload("res://game/blocks.gd")
 const SIZE = 16
 
-
 var id: String = ""
 var index: int = -1
 var is_local = true
@@ -11,12 +10,17 @@ var block_id: int = -1
 var block_rotation_index: int = -1
 var block_nodes: Array = []
 
+var _cursor_rect: ColorRect
+var _crosshair_h: ColorRect
+var _crosshair_v: ColorRect
+
 func _ready() -> void:
-	print_debug("player.gd: _ready", id, is_local)
-	var rect = ColorRect.new()
-	rect.color = Color(0, 1, 0, 0.2) # Green with 20% opacity
-	rect.size = Vector2(SIZE, SIZE)
-	add_child(rect)
+	print_debug("cursor.gd: _ready", id, is_local)
+	# var rect = ColorRect.new()
+	# rect.color = Color(0, 1, 0, 0.2) # Green with 20% opacity
+	# rect.size = Vector2(SIZE, SIZE)
+	# add_child(rect)
+	draw_crosshair()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -77,9 +81,7 @@ func DrawBlock(new_block_id: int, new_rotation_index: int) -> void:
 		return
 
 	# Remove existing block nodes
-	for node in block_nodes:
-		node.queue_free()
-	block_nodes.clear()
+	_clear_block_nodes()
 
 	# Draw new block
 	var block = BLOCKS.BLOCKS[new_block_id][new_rotation_index]
@@ -98,3 +100,53 @@ func DrawBlock(new_block_id: int, new_rotation_index: int) -> void:
 	# Update block ID and rotation index
 	block_id = new_block_id
 	block_rotation_index = new_rotation_index
+
+
+func _clear_block_nodes() -> void:
+	for node in block_nodes:
+		print_debug("cleared node")
+		node.queue_free()
+	block_nodes.clear()
+	block_id = -1
+	block_rotation_index = -1
+
+func set_mode(phase: String) -> void:
+	match phase:
+		"battle":
+			_cursor_rect.visible = false
+			_clear_block_nodes()
+			show_crosshair()
+		_:
+			_cursor_rect.visible = true
+			hide_crosshair()
+
+
+func draw_crosshair() -> void:
+	_cursor_rect = ColorRect.new()
+	_cursor_rect.color = Color(0, 1, 0, 0.2)
+	_cursor_rect.size = Vector2(SIZE, SIZE)
+	add_child(_cursor_rect)
+
+	# Crosshair: horizontal bar — 3 cells wide, 1px tall, centered
+	_crosshair_h = ColorRect.new()
+	_crosshair_h.color = Color(1, 0, 0, 1)
+	_crosshair_h.size = Vector2(SIZE * 3, 2)
+	_crosshair_h.position = Vector2(-SIZE, SIZE / 2)
+	_crosshair_h.visible = false
+	add_child(_crosshair_h)
+
+	# Crosshair: vertical bar — 1px wide, 3 cells tall, centered
+	_crosshair_v = ColorRect.new()
+	_crosshair_v.color = Color(1, 0, 0, 1)
+	_crosshair_v.size = Vector2(2, SIZE * 3)
+	_crosshair_v.position = Vector2(SIZE / 2, -SIZE)
+	_crosshair_v.visible = false
+	add_child(_crosshair_v)
+
+func hide_crosshair() -> void:
+	_crosshair_h.visible = false
+	_crosshair_v.visible = false
+
+func show_crosshair() -> void:
+	_crosshair_h.visible = true
+	_crosshair_v.visible = true
