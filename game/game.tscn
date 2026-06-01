@@ -8,6 +8,16 @@
 [ext_resource type="Script" uid="uid://cq5yws0jmn1tc" path="res://game/castle_renderer.gd" id="5_dxrkv"]
 [ext_resource type="Script" uid="uid://b7fu33rruwr08" path="res://game/camera_shake.gd" id="5_y36n6"]
 [ext_resource type="Script" uid="uid://7i5r4b3crkq3" path="res://game/projectile_renderer.gd" id="7_u5opy"]
+[ext_resource type="Script" uid="uid://cmlrp82brrmyk" path="res://game/menu/pause_menu.gd" id="9_j8tme"]
+[ext_resource type="Shader" uid="uid://ds5t1otjjhp3m" path="res://shaders/vignette.gdshader" id="10_j8tme"]
+[ext_resource type="Script" uid="uid://gw7io52gmahv" path="res://game/terrain/grid/grid_overlay.gd" id="11_3vho3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3vho3"]
+shader = ExtResource("10_j8tme")
+shader_parameter/vignette_radius = 1.0
+shader_parameter/vignette_softness = 0.36400001729
+shader_parameter/blur_strength = 4.89200023237
+shader_parameter/white_amount = 0.4670000221825
 
 [node name="Game" type="Node2D" unique_id=384236091]
 script = ExtResource("1_l1rk1")
@@ -22,7 +32,8 @@ script = ExtResource("3_h7iqs")
 script = ExtResource("4_dakft")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=2053026054]
-position = Vector2(770, 367)
+position = Vector2(970, 515)
+zoom = Vector2(2, 2)
 script = ExtResource("5_y36n6")
 
 [node name="EnclosedRegionRenderer" type="Node" parent="." unique_id=162839303]
@@ -33,3 +44,68 @@ script = ExtResource("5_dxrkv")
 
 [node name="ProjectileRenderer" type="Node" parent="." unique_id=498760256]
 script = ExtResource("7_u5opy")
+
+[node name="PauseMenu" type="CanvasLayer" parent="." unique_id=970917742]
+script = ExtResource("9_j8tme")
+
+[node name="Panel" type="Panel" parent="PauseMenu" unique_id=232164077]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ForfeitButton" type="Button" parent="PauseMenu/Panel" unique_id=1156447832]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -92.0
+offset_top = -55.0
+offset_right = -21.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "FOREFIT"
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/Panel" unique_id=849432388]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -55.0
+offset_right = 84.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "RESUME"
+
+[node name="Vignette and Blur" type="CanvasLayer" parent="." unique_id=47524291]
+layer = 100
+
+[node name="ColorRect" type="ColorRect" parent="Vignette and Blur" unique_id=2060879957]
+material = SubResource("ShaderMaterial_3vho3")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridOverlay" type="Node2D" parent="." unique_id=1920582855]
+z_index = 10
+script = ExtResource("11_3vho3")
+line_color = Color(0.07284262, 0.072842635, 0.072842576, 1)
+
+[connection signal="pressed" from="PauseMenu/Panel/ForfeitButton" to="PauseMenu" method="_on_forfeit_button_pressed"]
+[connection signal="pressed" from="PauseMenu/Panel/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]

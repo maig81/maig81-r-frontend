@@ -148,44 +148,23 @@ func _spawn_line(polygon: PackedVector2Array, idx: int) -> void:
 	fill.add_to_group("islands")
 
 	#line
-	var line = Line2D.new()
-	line.closed = true
+	var line = PencilLine.new()
 	line.points = polygon
-	line.width = 5
-	line.default_color = Color("434041")
-	line.antialiased = true
-	line.joint_mode = Line2D.LINE_JOINT_ROUND
-	line.begin_cap_mode = Line2D.LINE_CAP_ROUND
-	line.end_cap_mode = Line2D.LINE_CAP_ROUND
-	line.name = "Island_%d" % idx
-
-	var secondLinePolygon := _expand_polygon(polygon, 20)
-	var secondLine = line.duplicate()
-	secondLine.points = secondLinePolygon
-	secondLine.width = 2
-	secondLine.default_color = Color("45424367")
-
-	var curve = Curve.new()
-	curve.add_point(Vector2(0, 4.0))
-	curve.add_point(Vector2(1.0, 3.0))
-	curve.add_point(Vector2(10, 0.5))
-	line.width_curve = curve
-
-	var curve2 = Curve.new()
-	curve2.add_point(Vector2(0, 0))
-	curve2.add_point(Vector2(1.0, 3.0))
-	curve2.add_point(Vector2(10, 0.5))
-	curve2.add_point(Vector2(0, 0))
-	curve2.add_point(Vector2(1.0, 3.0))
-	curve2.add_point(Vector2(10, 0.5))
-	curve2.add_point(Vector2(0, 0))
-	curve2.add_point(Vector2(1.0, 3.0))
-	curve2.add_point(Vector2(10, 0.5))
-	secondLine.width_curve = curve
-
+	line.line_width = 1.5
+	line.line_color = Color("00000070")
 	add_child(line)
-	add_child(secondLine)
 	line.add_to_group("islands")
+
+	# outer line
+	var secondLinePolygon := _expand_polygon(polygon, 20)
+	var secondLine = PencilLine.new()
+	secondLine.points = secondLinePolygon
+	secondLine.line_width = 1.0
+	secondLine.line_color = Color("000000")
+	secondLine.pencil_alpha_min = 0.0
+	secondLine.pencil_alpha_max = 0.2
+	add_child(secondLine)
+	secondLine.add_to_group("islands")
 
 
 func _clear_islands() -> void:

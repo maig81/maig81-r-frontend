@@ -6,6 +6,7 @@ extends Node2D
 @onready var castle_renderer: Node = $CastleRenderer
 @onready var catapult_renderer: Node = $CatapultRenderer
 @onready var projectile_renderer: Node = $ProjectileRenderer
+@onready var grid_overlay: Node = $GridOverlay
 
 var _debug_label: Label
 
@@ -97,6 +98,7 @@ func _ws_terrain(_payload: Variant) -> void:
 	GameSession.terrain_width = width
 	GameSession.terrain_height = height
 	GameSession.terrain_cells = cells
+	grid_overlay.queue_redraw()
 
 	terrain_renderer.build_terrain(cells)
 	castle_renderer.draw_castles(castles)
@@ -179,6 +181,7 @@ func _ws_phase_change(_payload: Variant) -> void:
 		cursor.set_mode(phase)
 	print_debug("game.gd: phase change to", phase)
 
+	# change the grid overlay
 
 func _ws_bullet_fired(payload: Variant) -> void:
 	projectile_renderer.spawn(payload.get("id"), payload.get("from"), payload.get("to"),
