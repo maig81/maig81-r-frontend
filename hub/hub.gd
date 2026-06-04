@@ -1,11 +1,11 @@
 extends Node2D
 
-@onready var room_list: ItemList = $Control/VBoxContainer/RoomList
+@onready var room_list: ItemList = $Camera2D/Control/VBoxContainer/RoomList
 
 func _ready() -> void:
 	print("hub.gd: _ready")
 	Network.message_received.connect(_on_message_received)
-	Network.send_message("list_rooms")
+	Network.send_message("list_rooms", {"mode": GameSession.game_mode})
 
 # ------------------------------------------------------------
 # Router
@@ -52,7 +52,7 @@ func _ws_room_error(error: String) -> void:
 # ------------------------------------------------------------
 
 func _on_reload_room_list_button_down() -> void:
-	Network.send_message("list_rooms")
+	Network.send_message("list_rooms", {"mode": GameSession.game_mode})
 
 # Join room
 func _on_room_clicked(index: int, _at_position: Vector2, _mouse_button_index: int) -> void:
@@ -63,4 +63,4 @@ func _on_room_clicked(index: int, _at_position: Vector2, _mouse_button_index: in
 # Create room
 func _on_create_room_button_down() -> void:
 	print_debug("Create room clickedhandleListRooms()")
-	Network.send_message("create_room")
+	Network.send_message("create_room", {"mode": GameSession.game_mode})

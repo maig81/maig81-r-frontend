@@ -1,0 +1,7 @@
+[gd_resource type="Theme" format=3 uid="uid://cdoh48tswc7w2"]
+
+[ext_resource type="FontFile" uid="uid://165fihncbbjv" path="res://styles/ComingSoon-Regular.ttf" id="1_olruf"]
+
+[resource]
+default_font = ExtResource("1_olruf")
+default_font_size = 40

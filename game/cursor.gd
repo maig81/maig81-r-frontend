@@ -14,14 +14,39 @@ var _cursor_rect: ColorRect
 var _crosshair_h: ColorRect
 var _crosshair_v: ColorRect
 
+var _last_game_phase: String = ""
+
 func _ready() -> void:
 	print_debug("cursor.gd: _ready", id, is_local)
-	# var rect = ColorRect.new()
-	# rect.color = Color(0, 1, 0, 0.2) # Green with 20% opacity
-	# rect.size = Vector2(SIZE, SIZE)
-	# add_child(rect)
 	draw_crosshair()
 
+func _process(_delta: float) -> void:
+	if _last_game_phase != GameSession.current_phase:
+		set_mode(_last_game_phase)
+
+
+func set_mode(phase: String) -> void:
+	_last_game_phase = phase
+	match phase:
+		"battle":
+			_cursor_rect.visible = false
+			_clear_block_nodes()
+			show_crosshair()
+		"countdown":
+			_cursor_rect.visible = true
+			_clear_block_nodes()
+			hide_crosshair()
+		"place_weapons":
+			_cursor_rect.visible = true
+			_clear_block_nodes()
+			hide_crosshair()
+		"rebuild":
+			_cursor_rect.visible = false
+			hide_crosshair()
+		_:
+			_cursor_rect.visible = false
+			_clear_block_nodes()
+			hide_crosshair()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if (!is_local):
@@ -109,16 +134,6 @@ func _clear_block_nodes() -> void:
 	block_nodes.clear()
 	block_id = -1
 	block_rotation_index = -1
-
-func set_mode(phase: String) -> void:
-	match phase:
-		"battle":
-			_cursor_rect.visible = false
-			_clear_block_nodes()
-			show_crosshair()
-		_:
-			_cursor_rect.visible = true
-			hide_crosshair()
 
 
 func draw_crosshair() -> void:

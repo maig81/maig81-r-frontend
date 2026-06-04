@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dsojiyp4508lr"]
+
+[ext_resource type="Script" uid="uid://de78uccyawv4l" path="res://hub/mode_select.gd" id="1_nl7lv"]
+[ext_resource type="Theme" uid="uid://bdhwqtq5760us" path="res://styles/theme_text_main.tres" id="2_70thg"]
+
+[node name="ModeSelect" type="Node2D" unique_id=1391913]
+script = ExtResource("1_nl7lv")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=329342699]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=637399780]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=159461610]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control" unique_id=303562563]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -575.0
+offset_top = -322.5
+offset_right = 575.0
+offset_bottom = 322.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_70thg")
+alignment = 1
+
+[node name="TwoPlayerBattleButton" type="Button" parent="CanvasLayer/Control/VBoxContainer" unique_id=782947748]
+layout_mode = 2
+text = "2 PLAYER BATTLE"
+
+[node name="DebugButton" type="Button" parent="CanvasLayer/Control/VBoxContainer" unique_id=125490890]
+layout_mode = 2
+text = "DEBUG"

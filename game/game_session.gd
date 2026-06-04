@@ -12,6 +12,8 @@ var game_status: String = ""
 var players: Dictionary = {}
 var wall_cells: Array = []
 
+var game_mode: String = ""
+
 var current_phase: String = "" # "countdown", "battle", "place_weapons", "rebuild"
 
 
@@ -26,5 +28,6 @@ func reset() -> void:
 	terrain_cells = []
 	game_status = "";
 	players = {};
-	wall_cells = []
+	wall_cells = [];
 	current_phase = "";
+	game_mode = "";

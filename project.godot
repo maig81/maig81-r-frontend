@@ -37,4 +37,4 @@ window/size/initial_position_type=3
 
 rendering_device/driver.windows="d3d12"
 anti_aliasing/quality/msaa_2d=2
-environment/defaults/default_clear_color=Color(0.54901963, 0.6627451, 0.69803923, 1)
+environment/defaults/default_clear_color=Color(0.19607843, 0.42745098, 0.5176471, 1)
