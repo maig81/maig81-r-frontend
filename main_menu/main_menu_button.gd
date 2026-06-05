@@ -7,8 +7,8 @@ const FADE_DURATION := 0.15
 var _fade_tween: Tween
 
 func _ready() -> void:
-	connect("mouse_entered", self._on_mouse_entered)
-	connect("mouse_exited", self._on_mouse_exited)
+	mouse_entered.connect(_on_mouse_entered)
+	mouse_exited.connect(_on_mouse_exited)
 
 func _fade_underline(to_visible: bool) -> void:
 	if _fade_tween:

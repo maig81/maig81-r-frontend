@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://dsojiyp4508lr"]
+[gd_scene format=3 uid="uid://buuqj0wwrx2xe"]
 
-[ext_resource type="Script" uid="uid://de78uccyawv4l" path="res://hub/mode_select.gd" id="1_nl7lv"]
+[ext_resource type="Script" path="res://hub/mode_select.gd" id="1_nl7lv"]
 [ext_resource type="Theme" uid="uid://bdhwqtq5760us" path="res://styles/theme_text_main.tres" id="2_70thg"]
 
 [node name="ModeSelect" type="Node2D" unique_id=1391913]

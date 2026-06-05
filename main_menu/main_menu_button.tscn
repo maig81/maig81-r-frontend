@@ -8,7 +8,9 @@ bg_color = Color(0, 0, 0, 0)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wi55t"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8hmbn"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h5veo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_phtc6"]
 
 [node name="MainMenuButton" type="Button" unique_id=2120379635]
 offset_left = 104.0
@@ -16,12 +18,23 @@ offset_right = 371.0
 offset_bottom = 62.0
 theme = ExtResource("1_8hmbn")
 theme_override_colors/font_color = Color(1, 1, 1, 0.8627451)
+theme_override_colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
 theme_override_styles/normal = SubResource("StyleBoxFlat_8hmbn")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_wi55t")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_8hmbn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_h5veo")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_phtc6")
 text = "BUTTON TEXT"
 alignment = 0
 script = ExtResource("2_wi55t")
+
+[node name="Label" type="Label" parent="." unique_id=925173409]
+layout_mode = 0
+offset_left = -104.0
+offset_right = -64.0
+offset_bottom = 62.0
+theme = ExtResource("1_8hmbn")
+theme_override_colors/font_color = Color(1, 1, 1, 0.8627451)
+text = "01"
 
 [node name="Underline" type="CanvasGroup" parent="." unique_id=42549307]
 visible = false
@@ -52,12 +65,3 @@ default_color = Color(1, 1, 1, 0.7058824)
 joint_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
-
-[node name="Label" type="Label" parent="." unique_id=925173409]
-layout_mode = 0
-offset_left = -104.0
-offset_right = -64.0
-offset_bottom = 62.0
-theme = ExtResource("1_8hmbn")
-theme_override_colors/font_color = Color(1, 1, 1, 0.8627451)
-text = "01"

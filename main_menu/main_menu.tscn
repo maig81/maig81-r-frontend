@@ -15,20 +15,15 @@ layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 431.0
-offset_top = -584.0
-offset_right = 866.0
-offset_bottom = -310.0
+offset_left = 375.0
+offset_top = -528.0
+offset_right = 810.0
+offset_bottom = -254.0
 grow_vertical = 0
 
-[node name="BorderPoly" type="Polygon2D" parent="CanvasLayer/MenuStack" unique_id=596942402]
-position = Vector2(-172, -197)
-scale = Vector2(1, 1.0616666)
-invert_enabled = true
-invert_border = 1.0
-polygon = PackedVector2Array(900, 0, 0, 0, 0, 600, 900, 600)
+[node name="FrameAndText" type="CanvasGroup" parent="CanvasLayer/MenuStack" unique_id=577279782]
 
-[node name="Line2D" type="Line2D" parent="CanvasLayer/MenuStack" unique_id=1319197947]
+[node name="Line2D" type="Line2D" parent="CanvasLayer/MenuStack/FrameAndText" unique_id=1319197947]
 position = Vector2(-171, -41)
 points = PackedVector2Array(0, 0, 900, 0)
 width = 1.0
@@ -36,7 +31,7 @@ joint_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="Line2D2" type="Line2D" parent="CanvasLayer/MenuStack" unique_id=1802556203]
+[node name="Line2D2" type="Line2D" parent="CanvasLayer/MenuStack/FrameAndText" unique_id=1802556203]
 position = Vector2(-171, 346)
 points = PackedVector2Array(0, 0, 900, 0)
 width = 2.0
@@ -45,7 +40,7 @@ joint_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="Line2D3" type="Line2D" parent="CanvasLayer/MenuStack" unique_id=1009577281]
+[node name="Line2D3" type="Line2D" parent="CanvasLayer/MenuStack/FrameAndText" unique_id=1009577281]
 position = Vector2(173, 346)
 points = PackedVector2Array(0, 0, 0, 94)
 width = 2.0
@@ -53,8 +48,14 @@ joint_mode = 1
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="FortifyProjectTitle" type="Label" parent="CanvasLayer/MenuStack" unique_id=1803479128]
-layout_mode = 0
+[node name="BorderPoly" type="Polygon2D" parent="CanvasLayer/MenuStack/FrameAndText" unique_id=596942402]
+position = Vector2(-172, -197)
+scale = Vector2(1, 1.0616666)
+invert_enabled = true
+invert_border = 1.0
+polygon = PackedVector2Array(900, 0, 0, 0, 0, 600, 900, 600)
+
+[node name="FortifyProjectTitle" type="Label" parent="CanvasLayer/MenuStack/FrameAndText" unique_id=1803479128]
 offset_left = -106.0
 offset_top = -164.0
 offset_right = 411.0
@@ -63,8 +64,7 @@ theme = ExtResource("2_rlutr")
 theme_override_font_sizes/font_size = 47
 text = "FORTIFICATION PROJECT"
 
-[node name="FortifyProjectTitle2" type="Label" parent="CanvasLayer/MenuStack" unique_id=410028799]
-layout_mode = 0
+[node name="FortifyProjectTitle2" type="Label" parent="CanvasLayer/MenuStack/FrameAndText" unique_id=410028799]
 offset_left = -106.0
 offset_top = -107.0
 offset_right = 411.0
@@ -73,8 +73,7 @@ theme = ExtResource("2_rlutr")
 theme_override_font_sizes/font_size = 25
 text = "BASE BUILDING EXTRAVAGANZA"
 
-[node name="FortifyProjectTitle3" type="Label" parent="CanvasLayer/MenuStack" unique_id=185742416]
-layout_mode = 0
+[node name="FortifyProjectTitle3" type="Label" parent="CanvasLayer/MenuStack/FrameAndText" unique_id=185742416]
 offset_left = -106.0
 offset_top = 365.0
 offset_right = 70.0
@@ -99,21 +98,21 @@ text = "MULTIPLAYER"
 layout_mode = 2
 text = "SINGLE PLAYER"
 
-[node name="Label" parent="CanvasLayer/MenuStack/RootPanel/SinglePlayerButton" index="1" unique_id=925173409]
+[node name="Label" parent="CanvasLayer/MenuStack/RootPanel/SinglePlayerButton" index="0" unique_id=925173409]
 text = "02"
 
 [node name="SettingsButton" parent="CanvasLayer/MenuStack/RootPanel" unique_id=967589498 instance=ExtResource("2_3shxk")]
 layout_mode = 2
 text = "SETTINGS"
 
-[node name="Label" parent="CanvasLayer/MenuStack/RootPanel/SettingsButton" index="1" unique_id=925173409]
+[node name="Label" parent="CanvasLayer/MenuStack/RootPanel/SettingsButton" index="0" unique_id=925173409]
 text = "03"
 
 [node name="ExitButton" parent="CanvasLayer/MenuStack/RootPanel" unique_id=653782546 instance=ExtResource("2_3shxk")]
 layout_mode = 2
 text = "EXIT"
 
-[node name="Label" parent="CanvasLayer/MenuStack/RootPanel/ExitButton" index="1" unique_id=925173409]
+[node name="Label" parent="CanvasLayer/MenuStack/RootPanel/ExitButton" index="0" unique_id=925173409]
 text = "04"
 
 [node name="SinglePlayerPanel" type="VBoxContainer" parent="CanvasLayer/MenuStack" unique_id=79165126]
@@ -122,23 +121,37 @@ layout_mode = 0
 offset_right = 40.0
 
 [node name="StandardGameButton" parent="CanvasLayer/MenuStack/SinglePlayerPanel" unique_id=1850567493 instance=ExtResource("2_3shxk")]
+visible = false
 layout_mode = 2
+disabled = true
 text = "STANDARD"
 
 [node name="BlitzGameButton" parent="CanvasLayer/MenuStack/SinglePlayerPanel" unique_id=201402595 instance=ExtResource("2_3shxk")]
+visible = false
 layout_mode = 2
+disabled = true
 text = "BLITZ"
 
-[node name="Label" parent="CanvasLayer/MenuStack/SinglePlayerPanel/BlitzGameButton" index="1" unique_id=925173409]
+[node name="Label" parent="CanvasLayer/MenuStack/SinglePlayerPanel/BlitzGameButton" index="0" unique_id=925173409]
 text = "02"
 
 [node name="EndlessGameButton" parent="CanvasLayer/MenuStack/SinglePlayerPanel" unique_id=2088597347 instance=ExtResource("2_3shxk")]
+visible = false
 layout_mode = 2
+disabled = true
 text = "ENDLESS"
 
+[node name="Label" parent="CanvasLayer/MenuStack/SinglePlayerPanel/EndlessGameButton" index="0" unique_id=925173409]
+text = "03"
+
 [node name="CustomGameButton" parent="CanvasLayer/MenuStack/SinglePlayerPanel" unique_id=1650633203 instance=ExtResource("2_3shxk")]
+visible = false
 layout_mode = 2
+disabled = true
 text = "CUSTOM"
+
+[node name="Label" parent="CanvasLayer/MenuStack/SinglePlayerPanel/CustomGameButton" index="0" unique_id=925173409]
+text = "04"
 
 [node name="BackButton" parent="CanvasLayer/MenuStack/SinglePlayerPanel" unique_id=1280753668 instance=ExtResource("2_3shxk")]
 layout_mode = 2
@@ -155,12 +168,17 @@ layout_mode = 2
 text = "TWO PLAYER BATTLE"
 
 [node name="MassiveGameButton" parent="CanvasLayer/MenuStack/MultiPlayerPanel" unique_id=1403801971 instance=ExtResource("2_3shxk")]
+visible = false
 layout_mode = 2
+disabled = true
 text = "ALL OUT WAR"
 
 [node name="BackButton" parent="CanvasLayer/MenuStack/MultiPlayerPanel" unique_id=76547692 instance=ExtResource("2_3shxk")]
 layout_mode = 2
 text = "BACK"
+
+[node name="Label" parent="CanvasLayer/MenuStack/MultiPlayerPanel/BackButton" index="0" unique_id=925173409]
+text = "02"
 
 [node name="SettingsPanel" type="VBoxContainer" parent="CanvasLayer/MenuStack" unique_id=1654871398]
 visible = false
@@ -183,3 +201,6 @@ text = "BACK"
 [editable path="CanvasLayer/MenuStack/RootPanel/ExitButton"]
 [editable path="CanvasLayer/MenuStack/SinglePlayerPanel/StandardGameButton"]
 [editable path="CanvasLayer/MenuStack/SinglePlayerPanel/BlitzGameButton"]
+[editable path="CanvasLayer/MenuStack/SinglePlayerPanel/EndlessGameButton"]
+[editable path="CanvasLayer/MenuStack/SinglePlayerPanel/CustomGameButton"]
+[editable path="CanvasLayer/MenuStack/MultiPlayerPanel/BackButton"]
