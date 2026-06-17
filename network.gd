@@ -100,3 +100,16 @@ func _on_login_completed(result: int, response_code: int, _headers: PackedString
 	else:
 		var error_message: String = parsed.get("error", "Login failed (HTTP %d)" % response_code)
 		emit_signal("login_failed", error_message)
+
+func route_to_scene(next_scene: String) -> void:
+	match next_scene:
+		"main_menu":
+			get_tree().change_scene_to_file("res://main_menu/main_menu.tscn")
+		"hub":
+			get_tree().change_scene_to_file("res://hub/hub.tscn")
+		"game":
+			get_tree().change_scene_to_file("res://game/game.tscn")
+		"waiting":
+			get_tree().change_scene_to_file("res://hub/hub.tscn") # TODO: waiting scene
+		_:
+			push_error("Network: invalid scene: " + next_scene)

@@ -45,6 +45,7 @@ script = ExtResource("5_dxrkv")
 script = ExtResource("7_u5opy")
 
 [node name="PauseMenu" type="CanvasLayer" parent="." unique_id=970917742]
+visible = false
 
 [node name="Panel" type="Panel" parent="PauseMenu" unique_id=232164077]
 anchors_preset = 8

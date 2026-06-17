@@ -42,7 +42,7 @@ func _ws_room_joined(payload: Variant) -> void:
 	GameSession.player_uuid = player_uuid
 	print_debug("ws room_joined ", room_id, player_uuid)
 	Network.send_message("player_ready")
-	get_tree().change_scene_to_file("res://game/game.tscn")
+	Network.route_to_scene(payload.get("next_screen", ""))
 
 func _ws_room_error(error: String) -> void:
 	push_warning("room_error: " + error)
