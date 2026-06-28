@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Issue Tracking
+
+TODOs live as **GitHub Issues** in `maig81/fortification-project` (see the root `../CLAUDE.md` for full details). Current focus is the **v0.1** milestone; roadmap: [`../docs/MVP_v0.1.md`](../docs/MVP_v0.1.md).
+
+- Frontend tasks: `gh issue list -R maig81/fortification-project --label frontend`
+- All v0.1 issues: `gh issue list -R maig81/fortification-project --milestone v0.1`
+- Frontend-heavy work starts at parent **#14** (score HUD, result screen, return-to-lobby) and **#24** (Game feel/control: camera-follow, placement feedback, phase timer).
+- Check the relevant issue before starting; update/close it when done (confirm with the user before closing).
+
 ## Project
 
 **Godot 4.6** / **GDScript** frontend for an online multiplayer remake of Rampart. No traditional build system — the Godot Editor manages compilation, asset importing, and exports. Backend runs at `localhost:8080`.
