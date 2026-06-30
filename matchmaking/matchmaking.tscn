@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://d1matchmk0ng1"]
+
+[ext_resource type="Theme" uid="uid://bdhwqtq5760us" path="res://styles/theme_text_main.tres" id="1_theme"]
+[ext_resource type="Script" path="res://matchmaking/matchmaking.gd" id="2_script"]
+
+[node name="Matchmaking" type="Node2D"]
+script = ExtResource("2_script")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Control" type="Control" parent="Camera2D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Camera2D/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_theme")
+alignment = 1
+
+[node name="StatusLabel" type="Label" parent="Camera2D/Control/VBoxContainer"]
+layout_mode = 2
+text = "Searching for opponent…"
+horizontal_alignment = 1
+
+[node name="CancelButton" type="Button" parent="Camera2D/Control/VBoxContainer"]
+layout_mode = 2
+text = "Cancel"
+
+[connection signal="pressed" from="Camera2D/Control/VBoxContainer/CancelButton" to="." method="_on_cancel_pressed"]

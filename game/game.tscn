@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://7i5r4b3crkq3" path="res://game/projectile_renderer.gd" id="7_u5opy"]
 [ext_resource type="Shader" uid="uid://ds5t1otjjhp3m" path="res://shaders/vignette.gdshader" id="10_j8tme"]
 [ext_resource type="Script" uid="uid://gw7io52gmahv" path="res://game/terrain/grid/grid_overlay.gd" id="11_3vho3"]
+[ext_resource type="Script" uid="uid://d0s16r0gfiuwy" path="res://game/end_of_round_scores.gd" id="11_qf6n1"]
+[ext_resource type="Script" uid="uid://1lqaypfrlw6v" path="res://game/end_of_game_menu.gd" id="12_qf6n1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3vho3"]
 shader = ExtResource("10_j8tme")
@@ -17,6 +19,17 @@ shader_parameter/vignette_radius = 1.0
 shader_parameter/vignette_softness = 0.36400001729
 shader_parameter/blur_strength = 4.89200023237
 shader_parameter/white_amount = 0.4670000221825
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3vho3"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+expand_margin_left = 20.0
+expand_margin_top = 20.0
+expand_margin_right = 20.0
+expand_margin_bottom = 20.0
 
 [node name="Game" type="Node2D" unique_id=384236091]
 script = ExtResource("1_l1rk1")
@@ -106,6 +119,67 @@ mouse_filter = 2
 z_index = 10
 script = ExtResource("11_3vho3")
 line_color = Color(0.07284262, 0.072842635, 0.072842576, 1)
+
+[node name="EndOfRoundScores" type="CanvasLayer" parent="." unique_id=1499320253]
+visible = false
+script = ExtResource("11_qf6n1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EndOfRoundScores" unique_id=1667204916]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="EndOfGameMenu" type="CanvasLayer" parent="." unique_id=749426589]
+visible = false
+script = ExtResource("12_qf6n1")
+
+[node name="Label" type="Label" parent="EndOfGameMenu" unique_id=1055132494]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -455.5
+offset_top = -343.0
+offset_right = 455.5
+offset_bottom = -89.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 0.101960786)
+theme_override_font_sizes/font_size = 186
+text = "WINNER"
+horizontal_alignment = 1
+
+[node name="Panel" type="Panel" parent="EndOfGameMenu" unique_id=775889642]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -191.0
+offset_right = 191.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3vho3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="EndOfGameMenu/Panel" unique_id=1448936488]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -191.0
+offset_top = -181.0
+offset_right = 191.0
+offset_bottom = 181.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="pressed" from="PauseMenu/Panel/ForfeitButton" to="PauseMenu" method="_on_forfeit_button_pressed"]
 [connection signal="pressed" from="PauseMenu/Panel/ResumeButton" to="PauseMenu" method="_on_resume_button_pressed"]

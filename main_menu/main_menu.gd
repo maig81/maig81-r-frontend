@@ -88,7 +88,7 @@ func _on_back_button_pressed() -> void:
 # ------------------------------------------------------------------------------------------------
 func _on_two_player_battle_game_button_pressed() -> void:
 	GameSession.game_mode = "two_player_battle"
-	get_tree().change_scene_to_file("res://hub/hub.tscn")
+	get_tree().change_scene_to_file("res://matchmaking/matchmaking.tscn")
 
 func _on_massive_game_button_pressed() -> void:
 	print_debug("Massive game button pressed")

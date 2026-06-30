@@ -7,6 +7,8 @@ extends Node2D
 @onready var catapult_renderer: Node = $CatapultRenderer
 @onready var projectile_renderer: Node = $ProjectileRenderer
 @onready var grid_overlay: Node = $GridOverlay
+@onready var end_of_round_scores: CanvasLayer = $EndOfRoundScores
+@onready var end_of_game_menu: CanvasLayer = $EndOfGameMenu
 
 var _debug_label: Label
 
@@ -76,6 +78,10 @@ func _handle_event(type: String, payload: Variant) -> void:
 			_ws_bullet_fired(payload)
 		"bullet_impact":
 			_ws_bullet_impact(payload)
+		"round_score":
+			_ws_round_score(payload)
+		"match_end":
+			_ws_match_end(payload)
 
 
 func _exit_tree() -> void:
@@ -190,3 +196,12 @@ func _ws_bullet_fired(payload: Variant) -> void:
 func _ws_bullet_impact(payload: Variant) -> void:
 	projectile_renderer.impact(payload.get("id"), payload.get("kind"),
 		Vector2(payload.get("x"), payload.get("y")))
+
+func _ws_round_score(payload: Variant) -> void:
+	end_of_round_scores.visible = true
+	var scores: Array = payload.get("scores", [])
+	end_of_round_scores.update_scores(scores)
+
+func _ws_match_end(payload: Variant) -> void:
+	end_of_round_scores.visible = false
+	end_of_game_menu.show_result(payload.get("winner_uuid", ""), payload.get("statistics", {}))
